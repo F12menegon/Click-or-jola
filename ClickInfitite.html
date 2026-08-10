@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Clicker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <h2>Ganhe um</h2>
+            <p>Ganhe um dinehiro por click</p>
+            <button id="botaoClique" class="btn">Pay Pay</button>
+            <p>Dinheiro: R$ <span id="contador">0</span></p>
+        </div>
+
+        <div class="card">
+            <h2>Configure</h2>
+            <p>Configure o game do seu jeito</p>
+            <button class="btn">Alterar</button>
+            <h2>Escolha seu tema</h2>
+        <form>
+            <label for="profissao">Profissão:</label>
+            <select id="profissao" name = "profissao" required>
+                <option value="" disabled selected>
+                    Selecione sua profissão
+                </option>
+                <option value="desenvolvedor">Desenvolvedor</option>
+                <option value="analista">Analista</option>
+                <option value="designer">Designer</option>
+                <option value="outros">Outros</option>
+            </select>
+        </form>
+        </div>
+        
+        <div class="card">
+            <h2>Jola</h2>
+            <p>Compre tudo ou menos que pode pagar</p>
+            <button class="btn">Entrar jola</button>
+        </div>
+    </div>
+
+<script>
+  
+  let dinheiro = 0;
+
+  const contador = document.getElementById("contador");
+  const botao = document.getElementById("botaoClique");
+
+
+  function ganharDinheiro() {
+    dinheiro = dinheiro + 1; 
+    contador.innerText = dinheiro; 
+  }
+
+  
+  botao.addEventListener("click", ganharDinheiro);
+</script>
+</body>
+</html>
+<!--  -->
