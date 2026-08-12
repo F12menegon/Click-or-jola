@@ -15,31 +15,67 @@
             <p>Dinheiro: R$ <span id="contador">0</span></p>
         </div>
 
-        <div class="card">
-            <h2>Configure</h2>
-            <p>Configure o game do seu jeito</p>
-            <button class="btn">Alterar</button>
-            <h2>Escolha seu tema</h2>
-        <form>
-            <label for="profissao">Profissão:</label>
-            <select id="profissao" name = "profissao" required>
-                <option value="" disabled selected>
-                    Selecione sua profissão
-                </option>
-                <option value="desenvolvedor">Desenvolvedor</option>
-                <option value="analista">Analista</option>
-                <option value="designer">Designer</option>
-                <option value="outros">Outros</option>
-            </select>
-        </form>
+    <div class="card">
+    <h2>Configurações</h2>
+
+    <p>Escolha um tema que você adiquiriu na jornada</p>
+
+    <label for="temaSelecionado">Temas:</label>
+
+    <select id="temaSelecionado">
+        <option value="padrao">Padrão</option>
+    </select>
+    <br><br>
+
+    <button class="btn" onclick="aplicarTema()">
+        Aplicar Temas
+    </button>
+</div>
+
+
+<div class="card">
+    <h2>Jola</h2>
+
+    <p>Compre temas para se divertir.</p>
+
+    <button id="botao-principal" class="btn" onclick="abrirLoja()">
+        Abrir Jola
+    </button>
+
+    <div id="loja" class="loja oculta">
+
+        <h3>🛒 Loja</h3>
+
+        <div class="produto">
+            <h4>Tema Escuro</h4>
+            <p>Preço: R$ 10000</p>
+            <button onclick="comprarTema('escuro', 10000)">
+                Comprar
+            </button>
         </div>
-        
-        <div class="card">
-            <h2>Jola</h2>
-            <p>Compre tudo ou menos que pode pagar</p>
-            <button class="btn">Entrar jola</button>
+
+        <div class="produto">
+            <h4>Tema Azul</h4>
+            <p>Preço: R$ 20000</p>
+            <button onclick="comprarTema('azul', 20000)">
+                Comprar
+            </button>
         </div>
+
+        <div class="produto">
+            <h4>Tema Vermelho</h4>
+            <p>Preço: R$ 30000000</p>
+            <button onclick="comprarTema('vermelho', 30000000)">
+                Comprar
+            </button>
+        </div>
+
+        <button class="btn" onclick="fecharLoja()">
+            Fechar
+        </button>
+
     </div>
+</div>
 
 <script>
   
@@ -53,9 +89,109 @@
     dinheiro = dinheiro + 1; 
     contador.innerText = dinheiro; 
   }
-
-  
   botao.addEventListener("click", ganharDinheiro);
+
+  function temas() {
+
+  }
+
+  function toggleJanela() {
+  const janela = document.getElementById('janela-baixo');
+  janela.classList.toggle('oculta');
+}
+let temasComprados =
+    JSON.parse(localStorage.getItem("temasComprados")) || ["padrao"];
+
+   function abrirLoja() {
+
+    const loja = document.getElementById("loja");
+
+    loja.classList.remove("oculta");
+
+}
+
+function fecharLoja() {
+
+    const loja = document.getElementById("loja");
+
+    loja.classList.add("oculta");
+
+}
+function comprarTema(nomeTema, preco) {
+
+    if (temasComprados.includes(nomeTema)) {
+
+        alert("Você já possui esse tema!");
+
+        return;
+    }
+
+
+    if (dinheiro < preco) {
+
+        alert("Você não tem dinheiro suficiente!");
+
+        return;
+    }
+
+
+    dinheiro -= preco;
+
+    contador.innerText = dinheiro;
+
+
+    temasComprados.push(nomeTema);
+
+
+    localStorage.setItem(
+        "temasComprados",
+        JSON.stringify(temasComprados)
+    );
+
+
+    salvarDinheiro();
+
+    atualizarTemas();
+
+
+    alert("Tema comprado com sucesso!");
+}
+function atualizarTemas() {
+
+    const select = document.getElementById("temaSelecionado");
+
+    select.innerHTML = "";
+
+
+    temasComprados.forEach(tema => {
+
+        const option = document.createElement("option");
+
+        option.value = tema;
+
+        option.textContent = nomeBonitoTema(tema);
+
+        select.appendChild(option);
+
+    });
+
+}
+function nomeBonitoTema(tema) {
+
+    const nomes = {
+
+        padrao: "Tema Padrão",
+
+        escuro: "Tema Escuro",
+
+        azul: "Tema Azul",
+
+        vermelho: "Tema Vermelho"
+
+    };
+
+    return nomes[tema] || tema;
+}
 </script>
 </body>
 </html>
